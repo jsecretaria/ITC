@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Feature Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #87CEEB; /* Sky Blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 80%;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .box {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            display: none; /* All sections hidden by default */
+            color: white;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Background Images */
+        .converter-box {
+            background-image: url('https://images.unsplash.com/photo-1642562387531-0c3edcad1582?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            color: white;
+        }
+
+        .payroll-box {
+            background-image: url('https://plus.unsplash.com/premium_photo-1677160318655-e535d1692c7e?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        }
+
+        .tax-box {
+            background-image: url('//images.unsplash.com/photo-1502920514313-52581002a659?q=80&w=2067&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        }
+
+        .factorial-box {
+            background-image: url('https://plus.unsplash.com/premium_photo-1717887219619-4c653e5bf04c?q=80&w=2005&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        }
+
+        input, select, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        nav {
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #333;
+        }
+
+        nav a:hover {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Multi-Feature Calculator</h1>
+
+<!-- Navigation Links -->
+<nav>
+    <a href="#" onclick="showPage('converter')">Converter</a>
+    <a href="#" onclick="showPage('tax')">Income Tax Calculator</a>
+    <a href="#" onclick="showPage('payroll')">Payroll Calculator</a>
+    <a href="#" onclick="showPage('factorial')">Factorial & Sum</a>
+</nav>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Temperature and Length Converter -->
+    <div id="converter" class="box converter-box">
+        <h2>Converter</h2>
+        <div>
+            <h3>Temperature Converter</h3>
+            <label for="celsius">Celsius to Fahrenheit:</label>
+            <input type="number" id="celsius" placeholder="Enter Celsius" oninput="convertTemperature()">
+            <p id="fahrenheitResult" class="result"></p>
+
+            <label for="fahrenheit">Fahrenheit to Celsius:</label>
+            <input type="number" id="fahrenheit" placeholder="Enter Fahrenheit" oninput="convertTemperature()">
+            <p id="celsiusResult" class="result"></p>
+        </div>
+        
+        <div>
+            <h3>Length Converter</h3>
+            <label for="meters">Meters to Feet:</label>
+            <input type="number" id="meters" placeholder="Enter Meters" oninput="convertLength()">
+            <p id="feetResult" class="result"></p>
+
+            <label for="feet">Feet to Meters:</label>
+            <input type="number" id="feet" placeholder="Enter Feet" oninput="convertLength()">
+            <p id="metersResult" class="result"></p>
+        </div>
+    </div>
+
+    <!-- Income Tax Calculator -->
+    <div id="tax" class="box tax-box">
+        <h2>Income Tax Calculator</h2>
+        <label for="income">Enter your annual income:</label>
+        <input type="number" id="income" placeholder="Annual Income" oninput="calculateTax()">
+
+        <label for="currency">Select currency:</label>
+        <select id="currency">
+            <option value="USD">USD (United States Dollar)</option>
+    <option value="EUR">EUR (Euro)</option>
+    <option value="GBP">GBP (British Pound)</option>
+    <option value="INR">INR (Indian Rupee)</option>
+    <option value="PESO">PESO (Philippine Peso)</option>
+    <option value="JPY">JPY (Japanese Yen)</option>
+    <option value="AUD">AUD (Australian Dollar)</option>
+        </select>
+
+        <button onclick="calculateTax()">Calculate Tax</button>
+
+        <div id="taxResult" class="result"></div>
+    </div>
+
+    <!-- Payroll Calculator -->
+    <div id="payroll" class="box payroll-box">
+        <h2>Simple Payroll Calculator</h2>
+        <label for="name">Employee Name:</label>
+        <input type="text" id="name" placeholder="Enter Employee Name" required>
+        
+        <label for="hours">Hours Worked:</label>
+        <input type="number" id="hours" placeholder="Enter Hours Worked" required>
+        
+        <label for="wage">Hourly Wage:</label>
+        <input type="number" id="wage" placeholder="Enter Hourly Wage" required>
+
+        <button onclick="calculatePayroll()">Calculate Payroll</button>
+
+        <div id="payrollResult" class="result"></div>
+    </div>
+
+    <!-- Factorial, Sum, and Average -->
+    <div id="factorial" class="box factorial-box">
+        <h2>Factorial, Sum, and Average of First N Natural Numbers</h2>
+        <label for="number">Enter a number (N):</label>
+        <input type="number" id="number" placeholder="Enter N" oninput="calculate()">
+
+        <button onclick="calculate()">Calculate</button>
+
+        <div id="factorialResult" class="result"></div>
+        <div id="sumResult" class="result"></div>
+        <div id="averageResult" class="result"></div>
+    </div>
+</div>
+
+<script>
+// Show specific page based on user selection
+function showPage(page) {
+    // Hide all pages
+    document.querySelectorAll('.box').forEach(box => box.style.display = 'none');
+
+    // Show the selected page
+    document.getElementById(page).style.display = 'block';
+}
+
+// Temperature and Length Conversion Functions
+function convertTemperature() {
+    let celsius = document.getElementById('celsius').value;
+    if (celsius !== '') {
+        let fahrenheit = (celsius * 9/5) + 32;
+        document.getElementById('fahrenheitResult').textContent = `${celsius}°C = ${fahrenheit.toFixed(2)}°F`;
+    } else {
+        document.getElementById('fahrenheitResult').textContent = '';
+    }
+
+    let fahrenheit = document.getElementById('fahrenheit').value;
+    if (fahrenheit !== '') {
+        let celsius = (fahrenheit - 32) * 5/9;
+        document.getElementById('celsiusResult').textContent = `${fahrenheit}°F = ${celsius.toFixed(2)}°C`;
+    } else {
+        document.getElementById('celsiusResult').textContent = '';
+    }
+}
+
+function convertLength() {
+    let meters = document.getElementById('meters').value;
+    if (meters !== '') {
+        let feet = meters * 3.28084;
+        document.getElementById('feetResult').textContent = `${meters} meters = ${feet.toFixed(2)} feet`;
+    } else {
+        document.getElementById('feetResult').textContent = '';
+    }
+
+    let feet = document.getElementById('feet').value;
+    if (feet !== '') {
+        let meters = feet / 3.28084;
+        document.getElementById('metersResult').textContent = `${feet} feet = ${meters.toFixed(2)} meters`;
+    } else {
+        document.getElementById('metersResult').textContent = '';
+    }
+}
+
+// Tax Calculation
+function calculateTax() {
+    const income = parseFloat(document.getElementById('income').value);
+    const taxRates = { "USD": 0.25, "EUR": 0.22, "GBP": 0.20, "INR": 0.30 };
+
+    if (isNaN(income) || income <= 0) {
+        document.getElementById('taxResult').textContent = 'Please enter a valid income.';
+        return;
+    }
+
+    const taxRate = taxRates[document.getElementById('currency').value];
+    const taxAmount = income * taxRate;
+    document.getElementById('taxResult').textContent = `Tax Amount: ${taxAmount.toFixed(2)} ${document.getElementById('currency').value}`;
+}
+
+// Payroll Calculation
+function calculatePayroll() {
+    const hours = parseFloat(document.getElementById('hours').value);
+    const wage = parseFloat(document.getElementById('wage').value);
+
+    if (isNaN(hours) || isNaN(wage) || hours <= 0 || wage <= 0) {
+        document.getElementById('payrollResult').textContent = 'Please enter valid hours worked and wage.';
+        return;
+    }
+
+    const payroll = hours * wage;
+    document.getElementById('payrollResult').textContent = `Total payroll: ${payroll.toFixed(2)}`;
+}
+
+// Factorial, Sum, and Average Calculation
+function calculate() {
+    const number = parseInt(document.getElementById('number').value);
+
+    if (isNaN(number) || number <= 0) {
+        document.getElementById('factorialResult').textContent = 'Please enter a valid number.';
+        document.getElementById('sumResult').textContent = '';
+        document.getElementById('averageResult').textContent = '';
+        return;
+    }
+
+    let factorial = 1;
+    let sum = 0;
+
+    for (let i = 1; i <= number; i++) {
+        factorial *= i;
+        sum += i;
+    }
+
+    let average = sum / number;
+
+    document.getElementById('factorialResult').textContent = `Factorial of ${number}: ${factorial}`;
+    document.getElementById('sumResult').textContent = `Sum of first ${number} numbers: ${sum}`;
+    document.getElementById('averageResult').textContent = `Average of first ${number} numbers: ${average.toFixed(2)}`;
+}
+</script>
+
+</body>
+</html>
+
